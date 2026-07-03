@@ -1,0 +1,29 @@
+name: CustomEnchantments
+version: 1.0.0
+main: ru.customenchants.CustomEnchantmentsPlugin
+api-version: '1.21'
+author: Codex
+description: Custom enchantments with external jar enchantment modules.
+commands:
+  emchantment:
+    description: Apply custom enchantment to the item in hand.
+    usage: /emchantment <name> [level]
+    aliases: [cenchant]
+    permission: customenchants.command.emchantment
+  cenchantment:
+    description: Give a custom enchantment book.
+    usage: /cenchantment <name> [level] [player]
+    permission: customenchants.command.cenchantment
+permissions:
+  customenchants.command.emchantment:
+    description: Allows using /emchantment.
+    default: op
+  customenchants.command.cenchantment:
+    description: Allows using /cenchantment.
+    default: op
+  customenchants.admin:
+    description: Allows all CustomEnchantments admin commands.
+    default: op
+    children:
+      customenchants.command.emchantment: true
+      customenchants.command.cenchantment: true
