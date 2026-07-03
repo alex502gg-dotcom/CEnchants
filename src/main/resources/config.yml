@@ -1,0 +1,34 @@
+settings:
+  # Folder for custom enchantment jars:
+  # plugins/CustomEnchantments/enchantments/<enchantment-name>.jar
+  load-external-jars: true
+  enchantment-folder: enchantments
+  book-title-format: "&dКнига чара: &f%display_name%"
+  book-lore:
+    - "&7Перетащи книгу на предмет,"
+    - "&7чтобы наложить кастомный чар."
+  messages:
+    prefix: "&dCustomEnchantments &8» "
+    no-permission: "&cУ тебя нет прав."
+    player-only: "&cКоманда доступна только игроку."
+    unknown-enchantment: "&cЧар &f%name% &cне найден."
+    hold-item: "&cВозьми предмет в руку."
+    applied: "&aЧар &f%display_name% &aналожен."
+    book-given: "&aКнига чара &f%display_name% &aвыдана."
+    book-received: "&aТы получил книгу чара &f%display_name%&a."
+    cannot-apply: "&cЭтот чар нельзя наложить на этот предмет."
+
+enchantments:
+  magnetism:
+    enabled: true
+    display-name: "Магнетизм"
+    # Drops from broken blocks go straight into the player's inventory.
+    collect-block-drops: true
+    # Items near the player are attracted on pickup attempts.
+    pickup-radius: 6.0
+  autosmelt:
+    enabled: true
+    display-name: "Автоплавка"
+    respect-silk-touch: true
+    give-exp: true
+    exp-per-smelted-item: 1
