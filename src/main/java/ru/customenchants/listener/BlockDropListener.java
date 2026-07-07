@@ -8,7 +8,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDropItemEvent;
-import org.bukkit.event.player.PlayerAttemptPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import ru.customenchants.CustomEnchantmentsPlugin;
 import ru.customenchants.builtin.AutoSmeltEnchantment;
@@ -16,7 +15,6 @@ import ru.customenchants.builtin.MagnetismEnchantment;
 import ru.customenchants.manager.EnchantmentManager;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -101,20 +99,6 @@ public final class BlockDropListener implements Listener {
                 .ifPresent(magnetism -> collectDrops(event.getItems(), player, event.getBlock().getLocation()));
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onAttemptPickup(PlayerAttemptPickupItemEvent event) {
-        Player player = event.getPlayer();
-        ItemStack tool = player.getInventory().getItemInMainHand();
-        int level = enchantments.level(tool, "magnetism");
-        if (level <= 0) {
-            return;
-        }
-        enchantments.find("magnetism")
-                .filter(MagnetismEnchantment.class::isInstance)
-                .map(MagnetismEnchantment.class::cast)
-                .ifPresent(magnetism -> collectNearby(player, magnetism.radius()));
-    }
-
     private void collectDrops(List<Item> drops, Player player, Location fallbackLocation) {
         Iterator<Item> iterator = drops.iterator();
         while (iterator.hasNext()) {
@@ -125,22 +109,12 @@ public final class BlockDropListener implements Listener {
         }
     }
 
-    private void collectNearby(Player player, double radius) {
-        Collection<Item> nearby = player.getWorld().getNearbyEntitiesByType(Item.class, player.getLocation(), radius);
-        for (Item item : nearby) {
-            if (item.isDead() || !item.isValid()) {
-                continue;
-            }
-            giveOrDrop(player, List.of(item.getItemStack()), item.getLocation());
-            item.remove();
-        }
-    }
-
     private void giveOrDrop(Player player, List<ItemStack> items, Location fallbackLocation) {
         for (ItemStack itemStack : items) {
             Map<Integer, ItemStack> leftoverMap = player.getInventory().addItem(itemStack);
             for (ItemStack leftover : leftoverMap.values()) {
-                player.getWorld().dropItemNaturally(fallbackLocation, leftover);
+                Item dropped = player.getWorld().dropItemNaturally(fallbackLocation, leftover);
+                dropped.setPickupDelay(40);
             }
         }
     }

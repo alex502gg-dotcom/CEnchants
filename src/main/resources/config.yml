@@ -22,10 +22,9 @@ enchantments:
   magnetism:
     enabled: true
     display-name: "Магнетизм"
-    # Drops from broken blocks go straight into the player's inventory.
+    # Drops from blocks broken by the player go straight into their inventory.
+    # Ground items from other players are not vacuumed.
     collect-block-drops: true
-    # Items near the player are attracted on pickup attempts.
-    pickup-radius: 6.0
   autosmelt:
     enabled: true
     display-name: "Автоплавка"

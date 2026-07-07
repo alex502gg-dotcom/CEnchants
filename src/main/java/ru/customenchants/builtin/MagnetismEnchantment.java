@@ -8,7 +8,6 @@ import ru.customenchants.api.CustomEnchantment;
 public final class MagnetismEnchantment implements CustomEnchantment {
     private String displayName = "Магнетизм";
     private boolean collectBlockDrops = true;
-    private double pickupRadius = 6.0D;
 
     public MagnetismEnchantment(Plugin plugin) {
     }
@@ -30,15 +29,10 @@ public final class MagnetismEnchantment implements CustomEnchantment {
         }
         displayName = config.getString("display-name", displayName);
         collectBlockDrops = config.getBoolean("collect-block-drops", collectBlockDrops);
-        pickupRadius = Math.max(0.0D, config.getDouble("pickup-radius", pickupRadius));
     }
 
     public boolean collectBlockDrops() {
         return collectBlockDrops;
-    }
-
-    public double radius() {
-        return pickupRadius;
     }
 
     @Override
